@@ -1,0 +1,4 @@
+record -> field | field "," record
+
+// All ASCII chars from 32 to 126 except ",".
+field -> [ -+\--~]*
