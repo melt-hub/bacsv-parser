@@ -1,4 +1,21 @@
-record -> field | field "," record
+file = [header CLRF] record *(CLRF record) [CLRF]
 
-// All ASCII chars from 32 to 126 except ",".
-field -> [ -+\--~]*
+header = name *(COMMA name)
+
+record = field *(COMMA field) 
+
+name = field
+
+field = DQUOTE *(TEXTDATA / COMMA) DQUOTE 
+
+COMMA = %x2C
+
+CR = %x0D
+
+DQUOTE = %x22
+
+LF = %x0A 
+   
+CRLF = CR LF 
+
+TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E
