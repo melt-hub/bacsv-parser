@@ -2,11 +2,13 @@ file = [header CLRF] record *(CLRF record) [CLRF]
 
 header = name *(COMMA name)
 
-record = field *(COMMA field) 
+record = field *(COMMA field) / enclosed_field *(COMMA enclosed_field)
 
 name = field
 
-field = DQUOTE *(TEXTDATA / COMMA) DQUOTE 
+enclosed_field = DQUOTE *(TEXTDATA / COMMA) DQUOTE 
+
+field = *(TEXTDATA) 
 
 COMMA = %x2C
 
