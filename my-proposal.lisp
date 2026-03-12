@@ -19,28 +19,41 @@
 
 ; names production
 (defun names (line cursor)
-  (let ((name-pos (name line cursor)))
-    (when name-pos 
+  (let ((offset-a (name line cursor)))
+    (when offset-a 
       (or 
-        (let ((comma-pos (comma line name-pos)))
-          (names line comma-pos))
-        (clrf line name-pos)))))
+        (let ((offset-b (comma line offset-a)))
+          (names line offset-b))
+        (clrf line offset-b)))))
 ; end names production
 
 ; name production
-(defun name (line cursor)
-  (if (or (field line cursor) 
-          (enclosed-field line cursor))
-    t
-    nil))
+(defun name (line cursor) 
+  (or (field line cursor) 
+      (enclosed-field line cursor)))
 ; end name production
 
 ; comma production
-(defun comma (line cursor) t)
+(defun comma (line cursor) 
+  (let* ((curr-char (char line cursor))
+         (curr-ascii (char-code curr-char))
+         (rest-of-line (1+ cursor))))
+    (if (= curr-ascii #x2C)
+      rest-of-line
+      -1))
 ; end comma production
 
 ; clrf production
-(defun clrf (line cursor) t)
+(defun clrf (line cursor) 
+  (let* ((curr-char (char line cursor))
+         (nxt-char (char line (1+ cursor)))
+         (curr-ascii (char-code curr-char))
+         (nxt-ascii (char-code nxt-char))
+         (rest-of-line (+ cursor 2))))
+    (if (and (= curr-ascii #x0D)
+             (= nxt-ascii #x0A))
+      rest-of-line
+      -1))
 ; end clrf production
 
 ; ===============| END HEADER PARSING |===============
