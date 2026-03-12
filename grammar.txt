@@ -1,3 +1,6 @@
+
+; STANDARD FORM WITH REGEXs
+
 file = [header CLRF] record *(CLRF record) [CLRF]
 
 header = name *(COMMA name)
@@ -21,3 +24,46 @@ LF = %x0A
 CRLF = CR LF 
 
 TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E
+
+; END STANDARD FORM WITH REGEXs
+
+
+; IMPLEMENTED FORM WITH ONLY VARIABLES
+
+file = header records
+
+header = names
+
+names = name COMMA names / name CLRF
+
+name = field / enclosed_field
+
+
+records = CLRF record records / CLRF record CLRF
+
+record = fields / enclosed_fields
+
+fields = field COMMA fields 
+
+enclosed_fields = enclosed_field COMMA enclosed_fields
+
+field = word
+
+enclosed_field = DQUOTE word DQUOTE 
+
+word = TEXTDATA word / COMMA word
+
+
+COMMA = %x2C
+
+CR = %x0D
+
+DQUOTE = %x22
+
+LF = %x0A 
+   
+CRLF = CR LF 
+
+TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E
+
+; END IMPLEMENTED FORM WITH ONLY VARIABLES
