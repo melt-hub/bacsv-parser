@@ -118,3 +118,4 @@ Our grammar deals with none of those ambiguities; it just assumes that:
 5. Each `field` consists of a sequence of any ASCII character but the double quote, enclosed between double quotes.
 
 Imposing such limitations to the original grammar, thus to the language it generates, largely eases the complexity of our parser, nonetheless preserving usability in real world applications, being this CSV "dialect" quite common, and given the possibility to slightly modify our grammar to allow both double quote enclosed fields and non-double quot enclosed fields.
+
