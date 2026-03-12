@@ -40,13 +40,53 @@ file = [header CLRF] record *(CLRF record) [CLRF]
 
 header = name *(COMMA name)
 
-record = field *(COMMA field) / enclosed_field *(COMMA enclosed_field)
+record = field *(COMMA field) / enclosed_field *(COMMA enclosed_fielid)
 
 name = field
 
 enclosed_field = DQUOTE *(TEXTDATA / COMMA) DQUOTE 
 
 field = *(TEXTDATA) 
+
+COMMA = %x2C
+
+CR = %x0D
+
+DQUOTE = %x22
+
+LF = %x0A 
+   
+CRLF = CR LF 
+
+TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E
+```
+
+in a form where RegEx are simulated by right-recursive production rules:
+
+```abnf
+file = header records
+
+header = names
+
+names = name COMMA names / name CLRF
+
+name = field / enclosed_field
+
+
+records = CLRF record records / CLRF record CLRF
+
+record = fields / enclosed_fields
+
+fields = field COMMA fields 
+
+enclosed_fields = enclosed_field COMMA enclosed_fields
+
+field = word
+
+enclosed_field = DQUOTE word DQUOTE 
+
+word = TEXTDATA word / COMMA word
+
 
 COMMA = %x2C
 
@@ -75,6 +115,6 @@ Our grammar deals with none of those ambiguities; it just assumes that:
 2. Each `record` is located on a separate line, delimite by a line break (`CLRF`).
 3. The last record in the file may or may not have an ending line break.
 4. Each `record` consints a number of `field`(s) that should be equal to the number of the `names`(s) in the `header`.
-5. Each `field` consists of a sequence of any ASCII character but the double quote,either enclosed between double quotes or not.
+5. Each `field` consists of a sequence of any ASCII character but the double quote, enclosed between double quotes.
 
 Imposing such limitations to the original grammar, thus to the language it generates, largely eases the complexity of our parser, nonetheless preserving usability in real world applications, being this CSV "dialect" quite common, and given the possibility to slightly modify our grammar to allow both double quote enclosed fields and non-double quot enclosed fields.
