@@ -58,9 +58,37 @@
 
 ; ===============| END HEADER PARSING |===============
 
+; ===============| RECORDS PARSING |===============
+
 ; records production
 (defun records (csv-file) t)
 ; end recors production
+
+; record production
+(defun record (line cursor) t)
+; end recor production
+
+; fields production
+(defun fields (line cursor) t)
+; end fields production
+
+; enclosed fields production
+(defun enclosed-fields (line cursor) t)
+; end enclosed fields production
+
+; field production
+(defun field (line cursor) t)
+; end field production
+
+; enclosed field production
+(defun enclosed-field (line cursor) t)
+; end enclosed field production
+
+; word production
+(defun word (line cursor) t)
+; end word production
+
+; ===============| RECORDS PARSING |===============
 
 ; file production
 (defun file (csv-file)
