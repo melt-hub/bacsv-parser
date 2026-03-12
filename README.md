@@ -61,7 +61,7 @@ CRLF = CR LF
 TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E
 ```
 
-in a form where RegEx are simulated by right-recursive production rules:
+in a form where RegEx(s) are simulated by right-recursive production rules:
 
 ```abnf
 file = header records
