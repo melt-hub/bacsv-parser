@@ -19,16 +19,16 @@
 
 ; names production
 (defun names (line cursor)
-  (cond
-    ((null cursor) nil)
-    (t (let ((after-name (name line cursor)))
-         (cond
-           ((null after-name) nil)
-           ((>= after-name (length line)) after-name)
-           (t (let ((after-comma (comma line after-name)))
-                (if (and after-comma (< after-comma (length line)))
-                    (names line after-comma)
-                    after-name))))))))
+  (if (null cursor)
+      nil
+      (let ((after-name (name line cursor)))
+        (cond
+          ((null after-name) nil)
+          ((>= after-name (length line)) after-name)
+          (t (let ((after-comma (comma line after-name)))
+               (if (and after-comma (< after-comma (length line)))
+                   (names line after-comma)
+                   after-name)))))))
 ; end names production
 
 ; name production
