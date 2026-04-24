@@ -1,12 +1,12 @@
-; my-proposal.lisp
+#!/usr/bin/sbcl --script
 
-; reading test
-(defun reading-test (csv-file)
-  (let ((line (read-line csv-file nil)))
-    (unless (null line)
-      (format t "reading: ~a~%" line)
-      (reading-test csv-file))))
-; end reading test
+; parse-csv.lisp
+
+; die
+(defun die (msg)
+  (format t "~a~%" msg)
+  (sb-ext:exit :code 1))
+; end die
 
 ; ===============| HEADER PARSING |===============
 
@@ -49,7 +49,7 @@
 
 ; records production
 (defun records (csv-file) 
-  )
+  t)
 ; end recors production
 
 ; record production
@@ -94,7 +94,7 @@
 ; (defun word (line cursor) t)
 ; end word production
 
-; ===============| RECORDS PARSING |===============
+; ===============| END RECORDS PARSING |===============
 
 ; file production
 (defun file (csv-file)
@@ -102,11 +102,11 @@
     (unless (null line)
       (if (and (header line) (records csv-file))
         t
-        (format t "ERR: Error while parsing.~%")))))
+        (die "ERR: Error while parsing.")))))
 ; end file production
 
 ; usage
-(defun usage () (format t "ERR: Usage: bacsv-parser.lisp FILE~%"))
+(defun usage () (die "Usage: parse-csv.lisp FILE"))
 ; end usage
 
 ; main
@@ -118,7 +118,7 @@
     (t (usage))))
 ; end main
 
-; (main sb-ext:*posix-argv*)
+(main sb-ext:*posix-argv*)
 
-; end my-proposal.lisp
+; end parse-csv.lisp
  
