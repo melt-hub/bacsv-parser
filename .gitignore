@@ -1,0 +1,18 @@
+# Common Lisp
+*.fasl
+*.fas
+*.lib
+*.dx32fsl
+*.dx64fsl
+*.lx32fsl
+*.lx64fsl
+*.x86f
+*.sparcf
+*.dfsl
+*.pfsl
+*.d64fsl
+*.p64fsl
+*.xfasl
+
+# Backup files
+*~
